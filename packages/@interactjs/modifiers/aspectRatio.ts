@@ -62,7 +62,8 @@ const aspectRatio: ModifierModule<AspectRatioOptions, AspectRatioState> = {
       right : originalEdges.right  || (originalEdges.bottom && !originalEdges.left),
     }
 
-    state.xIsPrimaryAxis = !!(originalEdges.left || originalEdges.right)
+    // The only time the primary axis should be X is if you are dragging the left or right sides;  all others should be Y-primary.
+    state.xIsPrimaryAxis = !!((originalEdges.left || originalEdges.right) && !originalEdges.top && !originalEdges.bottom);
 
     if (state.equalDelta) {
       state.edgeSign = (linkedEdges.left ? 1 : -1) * (linkedEdges.top ? 1 : -1) as 1 | -1
